@@ -5,7 +5,7 @@
         <div class="card-header">Create New Students</div>
         <div class="card-body">
 
-            <form action="{{ url('/students/create') }}" method="POST">
+            <form action="{{ url('/students') }}" method="POST">
                 {!! csrf_field() !!}
                 <label>Name</label></br>
                 <input type="text" name="name" id="name" class="form-control"></br>
