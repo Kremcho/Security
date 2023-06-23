@@ -7,7 +7,7 @@
 
             <form action="{{ url('students/' .$students->id) }}" method="POST">
                 {!! csrf_field() !!}
-                @method("PATH")
+                @method("PUT")
                 <input type="hidden" name="id" id="id" value="{{$students->id}}" id="id" />
                 <label>Name</label></br>
                 <input type="text" name="name" id="name" value="{{$students->name}}" class="form-control"></br>
@@ -30,7 +30,7 @@
 
             <form action="{{ url('students/' .$students->id) }}" method="post">
                 {!! csrf_field() !!}
-                @method("PATCH")
+                @method("PUT")
                 <input type="hidden" name="id" id="id" value="{{$students->id}}" id="id" />
                 <label>Name</label></br>
                 <input type="text" name="name" id="name" value="{{$students->name}}" class="form-control"></br>
