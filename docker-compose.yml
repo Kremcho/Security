@@ -1,0 +1,40 @@
+version: '3'  # Specify the version of Docker Compose syntax being used.
+
+services:
+    web:
+        build:
+            context: .  # Build the web service using the Dockerfile in the current directory.
+        volumes:
+            - .:/var/www/html  # Mount the current directory to /var/www/html in the container.
+        ports:
+            - "8082:80"  # Expose port 8082 on the host and map it to port 80 in the container.
+        networks:
+            - emil-network  # Attach the web service to the network you created previously .
+        depends_on:
+            - mysql  # Specify that the web service depends on the mysql service.
+
+    mysql:
+        container_name: database  # Set a custom name for the MySQL container.
+        image: mysql:8  # Use the mysql:8 Docker image.
+        environment:
+            #For the fields MYSQL_ROOT_PASSWORD and MYSQL_DATABASE, you have to put the same values as you .env file
+            MYSQL_ROOT_HOST: "%"  # Allow connections to MySQL from any host.
+            MYSQL_ROOT_PASSWORD: "secret"  # Set the root password for MySQL.
+            MYSQL_DATABASE: "CRUD_Module_Emil"  # Create a database named CRUD_Module_Emil.
+        networks:
+            - my-network  # Attach the mysql service to the my-network.
+
+    pma:
+        depends_on:
+            - mysql  # Specify that the pma service depends on the mysql service.
+        image: phpmyadmin:latest  # Use the phpmyadmin:latest Docker image.
+        ports:
+            - 8080:80  # Expose port 8080 on the host and map it to port 80 in the container.
+        environment:
+            PMA_HOST: mysql  # Set the host name for phpMyAdmin to connect to (mysql).
+        networks:
+            - my-network  # Attach the pma service to the my-network.
+
+networks:
+    my-network:
+        driver: bridge  # Use the bridge network driver for the my-network.
